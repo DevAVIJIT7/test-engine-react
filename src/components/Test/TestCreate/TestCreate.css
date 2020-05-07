@@ -1,0 +1,15 @@
+.test-create-box {
+  background: #fff;
+  margin: 3% 3% 0% 3%; 
+  width: 94%;
+  height: 80vh;
+  padding: 15px;
+}
+
+.vertical-line {
+  border-left: 1px solid rgba(174, 188, 188, 0.73);
+  height: 100%;
+  width: 1%;
+  margin-left: 30px; 
+  max-width: 3%;
+}

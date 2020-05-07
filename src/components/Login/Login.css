@@ -1,0 +1,31 @@
+.container.login-box {
+    max-width: 30%;
+    text-align: center;
+    margin-top: auto;
+    margin-top: 300px;
+    color: #ffffff;
+}
+
+.login-box>div {
+    background: var(--div-color) !important;
+    max-height: 400px;
+}
+
+.login-box .form-group:first-child {
+    margin-top: 18%;
+}
+
+.login-box .form-group {
+    text-align: center;
+    margin-left: 20%;
+    margin-right: 20%; 
+}
+
+.login-box button {
+    width: 60%;
+    margin: 10px;
+}
+
+.input-group-text svg {
+  color: var(--field-color);
+}

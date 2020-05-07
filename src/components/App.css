@@ -1,0 +1,16 @@
+:root {
+    --main-bg-color: #ecf0f1;
+    --field-color: #28a745;
+    --nav-color: #563d7c;
+    --div-color: #FF9800;
+}
+.validationError {
+    color: #ffffff;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background: var(--main-bg-color);
+    font-family: Arial, Helvetica, sans-serif;
+}
