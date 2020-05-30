@@ -9,7 +9,6 @@ import './Login.css';
 class Login extends React.Component {
   renderError({ error, touched }) {
     if (error && touched) {
-      console.log(error)
       return (
         <div className="validationError">{error}</div>
       )

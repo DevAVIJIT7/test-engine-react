@@ -1,123 +1,135 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Field, reduxForm } from 'redux-form';
 import Header from '../../Header/Header';
 import './TestCreate.css';
+import Moment from 'moment'
+import momentLocalizer from 'react-widgets-moment';
+import { DateTimePicker } from 'react-widgets';
+import "react-widgets/dist/css/react-widgets.css";
+
+Moment.locale('en');
+momentLocalizer();
 
 class TestCreate extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      test: {
+        title: '',
+        selectedStudent: ''
+      }
+    }
+  }
+
+  renderInput = ({ input, label, meta }) => {
+    return (
+      <div>
+        <label htmlFor={label}>{ label }</label>
+        <input {...input} className="form-control"/>
+      </div>
+    )
+  }
+
+  renderDateTimePicker = ({ input, label, meta }) => {
+    return (
+      <div>
+        <label htmlFor={label}>{label}</label>
+        <DateTimePicker 
+          name={input.name}
+          defaultValue={new Date()}
+        />
+      </div>
+    )
+  }
+
+  renderSelect = ({ input, label, meta, options }) => {
+    return (
+      <div>
+        <label htmlFor={label}>{label}</label>
+        <select
+          {...input}
+          className="custom-select"
+        >
+          <option defaultValue={this.state.test.selectedStudent} disabled value="">Choose...</option>
+          {options.map(student => <option key={student.id} value={student.id}>{student.name}</option>)}
+        </select>
+      </div>
+    );
+  }
+
+  renderTextArea = ({input, label, meta, rows}) => {
+    return (
+      <div className="col-md-12 mb-3">
+        <label htmlFor={label}>{label}</label>
+        <textarea className="form-control" rows={rows}></textarea>
+      </div>
+    )
+  }
+
+  renderOptions = ({input, label, meta}) => {
+    return (
+      <div className="col-md-3 mb-3">
+        <label htmlFor={label}>{label}</label>
+        <input {...input} className="form-control"/>
+      </div>
+    )
+  }
+
+  students = () => {
+    return [
+      { name: "Student1", id: 1 },
+      { name: "Student2", id: 2 }
+    ];
+  }
+
+  changeTitle = (e) => {
+    this.setState({test: {title: e.target.value}})
+  }
+
+  onSubmit = (formValues) => {
+    this.props.signIn(formValues)
+  }
+
   render() {
     return (
       <div>
         <Header /> 
         <div className="test-create-box shadow row">
-        <div className="col-lg-7">
-          <form>
-              <div class="form-row">
-                <div class="col-md-4 mb-3">
-                  <label for="validationServer01">Title</label>
-                  <input type="text" class="form-control is-valid" id="validationServer01" value="Mark" required />
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
+          <div className="col-lg-7">
+            <form>
+              <div className="form-row">
+                <div className="col-md-4 mb-3">
+                  <Field name="title" label="Title" value={this.state.title} component={this.renderInput} onChange={this.changeTitle}/>
                 </div>
-                <div class="col-md-4 mb-3">
-                  <label for="validationServer02">Start Date</label>
-                  <input type="text" class="form-control is-valid" id="validationServer02" value="Otto" required />
-                  <div class="valid-feedback">
-                    Looks good!
-                  </div>
+                <div className="col-md-4 mb-3">
+                  <Field name="start_date" label="Start Date" component={this.renderDateTimePicker} />
                 </div>
-                <div class="col-md-4 mb-3">
-                  <label for="validationServerUsername">End Date</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" id="inputGroupPrepend3">@</span>
-                    </div>
-                    <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend3" required />
-                    <div class="invalid-feedback">
-                      Please choose a username.
-                    </div>
-                  </div>
+                <div className="col-md-4 mb-3">
+                  <Field name="end_date" label="End Date" component={this.renderDateTimePicker} />
                 </div>
               </div>
-              <div class="form-row">
-                <div class="col-md-8 mb-3">
-                  <label for="validationServer03">Description</label>
-                  <input type="text" class="form-control is-invalid" id="validationServer03" required />
-                  <div class="invalid-feedback">
-                    Please provide a valid city.
-                  </div>
+              <div className="form-row">
+                <div className="col-md-8 mb-3">
+                  <Field name="description" label="Description" component={this.renderInput} />
                 </div>
-                <div class="col-md-4 mb-3">
-                  <label for="validationServer04">Students</label>
-                  <select class="custom-select is-invalid" id="validationServer04" required>
-                    <option selected disabled value="">Choose...</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    Please select a valid state.
-                  </div>
+                <div className="col-md-4 mb-3">
+                  <Field name="students[]" label="Select Students" component={this.renderSelect} options={this.students()}/>
                 </div>
               </div>
-              <div class="form-row">
-                <div class="col-md-12 mb-3">
-                  <label for="validationServer03">Question</label>
-                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"></textarea>
-                  <div class="invalid-feedback">
-                    Please provide a valid city.
-                  </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                  <label for="validationServer04">Option 1</label>
-                  <select class="custom-select is-invalid" id="validationServer04" required>
-                    <option selected disabled value="">Choose...</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    Please select a valid state.
-                  </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                  <label for="validationServer04">Option 2</label>
-                  <select class="custom-select is-invalid" id="validationServer04" required>
-                    <option selected disabled value="">Choose...</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    Please select a valid state.
-                  </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                  <label for="validationServer04">Option 3</label>
-                  <select class="custom-select is-invalid" id="validationServer04" required>
-                    <option selected disabled value="">Choose...</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    Please select a valid state.
-                  </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                  <label for="validationServer04">Option 4</label>
-                  <select class="custom-select is-invalid" id="validationServer04" required>
-                    <option selected disabled value="">Choose...</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    Please select a valid state.
-                  </div>
-                </div>
+              <div className="form-row">
+                <Field name="question" label="Question" component={this.renderTextArea} rows="10"/>
+                <Field name="option1" label="Option1" component={this.renderOptions} />
+                <Field name="option2" label="Option1" component={this.renderOptions} />
+                <Field name="option3" label="Option1" component={this.renderOptions} />
+                <Field name="option4" label="Option1" component={this.renderOptions} />
               </div>
-              <button class="btn btn-primary" type="submit">Submit form</button>
+              <button className="btn btn-success float-right mt-3" type="submit">Save</button>
             </form>
           </div>
           <div className="col-lg-1 vertical-line"></div>
           <div className="col-lg-4">
-            My Test
+            <h2>{this.state.test.title}</h2>
           </div>
         </div>     
       </div>
@@ -125,8 +137,27 @@ class TestCreate extends React.Component {
   }
 }
 
+const validate = (formValues) => {
+  const errors = {};
+
+  if (!formValues.email) {
+    errors.email = "You must enter your email.";
+  }
+
+  if (!formValues.password) {
+    errors.password = "You must enter your Password.";
+  }
+
+  return errors;
+}
+
 const mapStateToProps = (state) => {
   return { token: state.auth.token, user: state.auth.user, tests: state.test.tests  }
 }
 
-export default connect(mapStateToProps, {})(TestCreate);
+const TestForm = connect(mapStateToProps, { })(TestCreate);
+
+export default reduxForm({
+  form: 'testCreateForm',
+  validate
+})(TestForm);
