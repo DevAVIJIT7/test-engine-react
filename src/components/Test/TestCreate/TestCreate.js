@@ -16,13 +16,37 @@ class TestCreate extends React.Component {
     super(props)
     this.state = {
       testTitle: '',
+      students: [
+        { name: "Student1", id: 1, checked: false },
+        { name: "Student2", id: 2, checked: false },
+        { name: "Student3", id: 3, checked: false },
+        { name: "Student4", id: 4, checked: false },
+        { name: "Student5", id: 5, checked: false },
+        { name: "Student6", id: 6, checked: false }
+      ],
       selectedStudents: [],
-      searchName: ''
+      selectAll: false,
+      searchName: '',
+      showDropdownList: false
     }
   }
 
-  setStudents = (studentId) => {
-    this.setState({selectedStudents: [...this.state.selectedStudents, studentId]})
+  selectAllStudents = () => {
+    const students = this.state.students.map(s=> {
+      s.checked = true
+      return s
+    })
+    this.setState({students})
+  }
+
+  selectStudent = (e) => {
+    const students = this.state.students.map(s => {
+      if (s.id === +e.target.value) {
+        s.checked = e.target.checked;
+      }
+      return s;
+    })
+    this.setState({students})
   }
 
   renderInput = ({ input, label, meta }) => {
@@ -46,38 +70,38 @@ class TestCreate extends React.Component {
     )
   }
 
+  showDropdown = () => {
+    this.setState({showDropdownList: true})
+  }
+
+  closeDropdown = () => {
+    this.setState({showDropdownList: false})
+  }
+
   renderSelect = ({ input, label, meta, placeholder }) => {
     return (
       <div>
-        {/* <label htmlFor={label}>{label}</label>
-        <select
-          {...input}
-          className="custom-select"
-          multiple
-          value={this.state.selectedStudents}
-          onChange={e => this.setStudents(e.target.value)}
-        >
-          {options.map(student => (
-            <option key={student.id} value={student.id}>
-              {student.name}
-            </option>
-          ))}
-        </select> */}
         <label htmlFor={label}>{label}</label>
-        <input {...input} placeholder={placeholder} value={this.searchName} className="form-control"/>
-        {this.renderStudentList()}
+        <input {...input} placeholder={placeholder} onFocus={ this.showDropdown }  value={this.searchName} className="form-control"/>
       </div>
     );
   }
 
   renderStudentList = (search) => {
     return (
-      <div class="dropdown-menu show">
-        {this.students().map(s => (
-          <div class="items">
-            <input type="checkbox" class="dropdown-item" value={s.id}/><span>{s.name}</span> 
-          </div>
-        ))}
+      <div className={`dropdown-menu ${this.state.showDropdownList ? 'show': ''}`}>
+        <div className="items">
+          {this.filteredStudents().map(s => (
+            <div className="dropdown-item" key={s.id}>
+              <input type="checkbox" value={s.id} onChange={this.selectStudent} checked={s.checked}/><span>{s.name}</span> 
+            </div>
+          ))}
+        </div>
+        <div className="dropdown-divider"></div>
+        <div className="select-student-button mx-4">
+          <button className="btn btn-primary" onClick={this.selectAllStudents} type="button">Select all</button>|
+          <button className="btn btn-warning" type="button" onClick={this.closeDropdown}>close</button>
+        </div>
       </div>
     )
   }
@@ -100,18 +124,17 @@ class TestCreate extends React.Component {
     )
   }
 
-  students = () => {
-    return [
-      { name: "Student1", id: 1 },
-      { name: "Student2", id: 2 },
-      { name: "Student3", id: 3 },
-      { name: "Student4", id: 4 },
-      { name: "Student5", id: 5 }
-    ];
+  filteredStudents = () => {
+    const searchName = new RegExp(this.state.searchName, 'i');
+    return this.state.students.filter(s => searchName.test(s.name));
   }
 
   changeTitle = (e) => {
     this.setState({testTitle: e.target.value})
+  }
+
+  changeSearch = (e) => {
+    this.setState({searchName: e.target.value})
   }
 
   onSubmit = (formValues) => {
@@ -141,7 +164,8 @@ class TestCreate extends React.Component {
                   <Field name="description" label="Description" component={this.renderInput} />
                 </div>
                 <div className="col-md-4 mb-3">
-                  <Field name="students[]" label="Select Students" component={this.renderSelect} placeholder="Search names"/>
+                  <Field name="students[]" label="Select Students" component={this.renderSelect} placeholder="Search names" onChange={this.changeSearch}/>
+                  {this.renderStudentList()}
                 </div>
               </div>
               <div className="form-row">

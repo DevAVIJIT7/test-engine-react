@@ -17,5 +17,10 @@
 .dropdown-menu {
   left: 6px;
   width: 97%;
-  max-height: 200px;
 }
+
+.dropdown-menu > .items {
+  max-height: 200px;
+  overflow-y: scroll;
+}
+
