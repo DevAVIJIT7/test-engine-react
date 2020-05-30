@@ -15,11 +15,14 @@ class TestCreate extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      test: {
-        title: '',
-        selectedStudent: ''
-      }
+      testTitle: '',
+      selectedStudents: [],
+      searchName: ''
     }
+  }
+
+  setStudents = (studentId) => {
+    this.setState({selectedStudents: [...this.state.selectedStudents, studentId]})
   }
 
   renderInput = ({ input, label, meta }) => {
@@ -43,19 +46,40 @@ class TestCreate extends React.Component {
     )
   }
 
-  renderSelect = ({ input, label, meta, options }) => {
+  renderSelect = ({ input, label, meta, placeholder }) => {
     return (
       <div>
-        <label htmlFor={label}>{label}</label>
+        {/* <label htmlFor={label}>{label}</label>
         <select
           {...input}
           className="custom-select"
+          multiple
+          value={this.state.selectedStudents}
+          onChange={e => this.setStudents(e.target.value)}
         >
-          <option defaultValue={this.state.test.selectedStudent} disabled value="">Choose...</option>
-          {options.map(student => <option key={student.id} value={student.id}>{student.name}</option>)}
-        </select>
+          {options.map(student => (
+            <option key={student.id} value={student.id}>
+              {student.name}
+            </option>
+          ))}
+        </select> */}
+        <label htmlFor={label}>{label}</label>
+        <input {...input} placeholder={placeholder} value={this.searchName} className="form-control"/>
+        {this.renderStudentList()}
       </div>
     );
+  }
+
+  renderStudentList = (search) => {
+    return (
+      <div class="dropdown-menu show">
+        {this.students().map(s => (
+          <div class="items">
+            <input type="checkbox" class="dropdown-item" value={s.id}/><span>{s.name}</span> 
+          </div>
+        ))}
+      </div>
+    )
   }
 
   renderTextArea = ({input, label, meta, rows}) => {
@@ -79,12 +103,15 @@ class TestCreate extends React.Component {
   students = () => {
     return [
       { name: "Student1", id: 1 },
-      { name: "Student2", id: 2 }
+      { name: "Student2", id: 2 },
+      { name: "Student3", id: 3 },
+      { name: "Student4", id: 4 },
+      { name: "Student5", id: 5 }
     ];
   }
 
   changeTitle = (e) => {
-    this.setState({test: {title: e.target.value}})
+    this.setState({testTitle: e.target.value})
   }
 
   onSubmit = (formValues) => {
@@ -100,7 +127,7 @@ class TestCreate extends React.Component {
             <form>
               <div className="form-row">
                 <div className="col-md-4 mb-3">
-                  <Field name="title" label="Title" value={this.state.title} component={this.renderInput} onChange={this.changeTitle}/>
+                  <Field name="title" label="Title" value={this.state.testTitle} component={this.renderInput} onChange={this.changeTitle}/>
                 </div>
                 <div className="col-md-4 mb-3">
                   <Field name="start_date" label="Start Date" component={this.renderDateTimePicker} />
@@ -114,7 +141,7 @@ class TestCreate extends React.Component {
                   <Field name="description" label="Description" component={this.renderInput} />
                 </div>
                 <div className="col-md-4 mb-3">
-                  <Field name="students[]" label="Select Students" component={this.renderSelect} options={this.students()}/>
+                  <Field name="students[]" label="Select Students" component={this.renderSelect} placeholder="Search names"/>
                 </div>
               </div>
               <div className="form-row">
@@ -124,12 +151,12 @@ class TestCreate extends React.Component {
                 <Field name="option3" label="Option1" component={this.renderOptions} />
                 <Field name="option4" label="Option1" component={this.renderOptions} />
               </div>
-              <button className="btn btn-success float-right mt-3" type="submit">Save</button>
+              <button className="btn btn-success float-right mt-3" type="submit">Add Question</button>
             </form>
           </div>
           <div className="col-lg-1 vertical-line"></div>
           <div className="col-lg-4">
-            <h2>{this.state.test.title}</h2>
+            <h2>{this.state.testTitle}</h2>
           </div>
         </div>     
       </div>
