@@ -18,6 +18,10 @@ module.exports = {
     'react',
   ],
   rules: {
-    "no-underscore-dangle": 'off'
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "no-underscore-dangle": 0,
+    "import/no-named-as-default": 0,
+    "import/no-named-as-default-member": 0
+    
   },
 };
