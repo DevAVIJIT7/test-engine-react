@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './Header.css';
 
 class Header extends React.Component {
@@ -12,7 +12,10 @@ class Header extends React.Component {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav">
             <li className="nav-item active">
-              <a className="nav-link" href="#">Tests <span className="sr-only">(current)</span></a>
+              <a className="nav-link" href="#">
+                Tests
+                <span className="sr-only">(current)</span>
+              </a>
             </li>
             <li className="nav-item">
               <a className="nav-link" href="#">Reports</a>
@@ -20,10 +23,16 @@ class Header extends React.Component {
           </ul>
           <ul className="navbar-nav ml-auto">
             <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" 
-                aria-haspopup="true" aria-expanded="false"
+              <a
+                className="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdown"
+                role="button"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
               >
-              <FontAwesomeIcon icon={faUserCircle} size="2x"/>  
+                <FontAwesomeIcon icon={faUserCircle} size="2x" />
               </a>
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <a className="dropdown-item" href="#">Logout</a>
@@ -36,9 +45,6 @@ class Header extends React.Component {
   }
 }
 
-
-const mapStateToProps = (state) => {
-  return { token: state.auth.token, user: state.auth.user }
-}
+const mapStateToProps = (state) => ({ token: state.auth.token, user: state.auth.user });
 
 export default connect(mapStateToProps, { })(Header);

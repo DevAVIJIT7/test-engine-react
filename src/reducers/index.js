@@ -4,7 +4,7 @@ import authReducer from './authReducer';
 import testReducer from './testReducer';
 
 export default combineReducers({
-	auth: authReducer,
-	form: formReducer,
-	test: testReducer
-})
+  auth: authReducer,
+  form: formReducer,
+  test: testReducer,
+});

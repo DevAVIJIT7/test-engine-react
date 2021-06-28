@@ -1,14 +1,14 @@
 import { FETCH_TESTS } from '../actions/types';
 
 const INTIAL_STATE = {
-	tests: []
+  tests: [],
 };
 
 export default (state = INTIAL_STATE, action) => {
-	switch (action.type) {
+  switch (action.type) {
     case FETCH_TESTS:
-			return {...state, tests: action.payload.tests };
-		default:
-			return state;
-	}
-}
+      return { ...state, tests: action.payload.tests };
+    default:
+      return state;
+  }
+};

@@ -6,20 +6,18 @@ import TestCreate from './Test/TestCreate/TestCreate';
 import history from '../history';
 import './App.css';
 
-const App = () => {
-	return (
-		<div>
-			<Router history={history}>
-				<div>
-					<Switch>
-						<Route path="/" exact component={Login} />
-						<Route path="/tests" exact component={Test} />
-						<Route path="/tests/create" exact component={TestCreate} />
-					</Switch>
-				</div>
-			</Router>
-		</div>
-	)
-}
+const App = () => (
+  <div>
+    <Router history={history}>
+      <div>
+        <Switch>
+          <Route path="/" exact component={Login} />
+          <Route path="/tests" exact component={Test} />
+          <Route path="/tests/create" exact component={TestCreate} />
+        </Switch>
+      </div>
+    </Router>
+  </div>
+);
 
 export default App;

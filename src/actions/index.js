@@ -1,107 +1,100 @@
-import {withoutToken, withToken} from '../apis/base';
+import { withoutToken, withToken } from '../apis/base';
 import history from '../history';
-import { SIGN_IN, SIGN_OUT, SIGN_IN_ERROR, FETCH_USER, FETCH_TESTS } from './types';
+import {
+  SIGN_IN, SIGN_OUT, SIGN_IN_ERROR, FETCH_USER, FETCH_TESTS,
+} from './types';
 
-export const signIn = (formValues) => {
-	return async (dispatch) => {
-		try {
-			const response = await withoutToken.post('/session/login', {...formValues})
+export const signIn = (formValues) => async (dispatch) => {
+  try {
+    const response = await withoutToken.post('/session/login', { ...formValues });
 
-			dispatch({
-				type: SIGN_IN,
-				payload: response.data
-			});
+    dispatch({
+      type: SIGN_IN,
+      payload: response.data,
+    });
 
-			const user = response.data.user;
-			const tokens = user.tokens;
-			localStorage.setItem("userId", user._id);
-			localStorage.setItem("token", tokens[tokens.length - 1].token);
+    const { user } = response.data;
+    const { tokens } = user;
+    localStorage.setItem('userId', user._id);
+    localStorage.setItem('token', tokens[tokens.length - 1].token);
 
-			history.push('/tests');
-		} catch (error) {
-			dispatch({
-				type: SIGN_IN_ERROR,
-				payload: error.response
-			})
-		}
-	}
-} 
+    history.push('/tests');
+  } catch (error) {
+    dispatch({
+      type: SIGN_IN_ERROR,
+      payload: error.response,
+    });
+  }
+};
 
-export const signOut = () => {
-	return {
-		type: SIGN_OUT
-	}
-}
+export const signOut = () => ({
+  type: SIGN_OUT,
+});
 
-export const fetchUser = () => {
-	return async (dispatch) => {
-		let id = localStorage.getItem('userId');
-		const response = await withToken.get(`/users/${id}`)	
+export const fetchUser = () => async (dispatch) => {
+  const id = localStorage.getItem('userId');
+  const response = await withToken.get(`/users/${id}`);
 
-		dispatch({ 
-			type: FETCH_USER,
-			payload: response.data
-		})
-	}
-} 
+  dispatch({
+    type: FETCH_USER,
+    payload: response.data,
+  });
+};
 
 // export const createStream = (formValues) => {
 // 	return async (dispatch, getState) => {
 // 		const { userId } = getState().auth;
-// 		const response = await streams.post('/streams', {...formValues, userId})	
+// 		const response = await streams.post('/streams', {...formValues, userId})
 
-// 		dispatch({ 
+// 		dispatch({
 // 			type: CREATE_STREAM,
 // 			payload: response.data
 // 		})
 
 // 		history.push('/')
 // 	}
-// } 
+// }
 
-export const fetchTests = () => {
-	return async (dispatch) => {
-		const response = await withToken.get('/tests');
+export const fetchTests = () => async (dispatch) => {
+  const response = await withToken.get('/tests');
 
-		dispatch({ 
-			type: FETCH_TESTS,
-			payload: response.data
-		})
-	}
-} 
+  dispatch({
+    type: FETCH_TESTS,
+    payload: response.data,
+  });
+};
 
 // export const fetchStream = (id) => {
 // 	return async (dispatch) => {
-// 		const response = await streams.get(`/streams/${id}`)	
+// 		const response = await streams.get(`/streams/${id}`)
 
-// 		dispatch({ 
+// 		dispatch({
 // 			type: FETCH_STREAM,
 // 			payload: response.data
 // 		})
 // 	}
-// } 
-
+// }
 
 // export const editStream = (id, formValues) => {
 // 	return async (dispatch) => {
-// 		const response = await streams.patch(`/streams/${id}`, formValues)	
+// 		const response = await streams.patch(`/streams/${id}`, formValues)
 
-// 		dispatch({ 
+// 		dispatch({
 // 			type: EDIT_STREAM,
 // 			payload: response.data
 // 		})
 
 // 		history.push('/')
 // 	}
-// } 
+// }
 
 // export const deleteStream = (id) => {
 // 	return async (dispatch) => {
-// 		await streams.delete(`/streams/${id}`)	
+// 		await streams.delete(`/streams/${id}`)
 
-// 		dispatch({ 
+// 		dispatch({
 // 			type: DELETE_STREAM,
 // 			payload: id
 // 		})
 // 	}
-// } 
+// }

@@ -1,1 +1,1 @@
-export default require("history").createBrowserHistory();
+export default require('history').createBrowserHistory();

@@ -14,15 +14,13 @@ class Test extends React.Component {
   render() {
     return (
       <div>
-        <Header />      
+        <Header />
         <TestCard tests={this.props.tests} />
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => {
-  return { token: state.auth.token, user: state.auth.user, tests: state.test.tests  }
-}
+const mapStateToProps = (state) => ({ token: state.auth.token, user: state.auth.user, tests: state.test.tests });
 
-export default connect(mapStateToProps, { fetchUser, fetchTests})(Test);
+export default connect(mapStateToProps, { fetchUser, fetchTests })(Test);
