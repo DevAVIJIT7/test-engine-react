@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import { faAt, faLock } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { signIn } from '../../actions';
-import { faAt, faLock } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import './Login.css';
 
 class Login extends React.Component {
@@ -11,7 +11,7 @@ class Login extends React.Component {
     if (error && touched) {
       return (
         <div className="validationError">{error}</div>
-      )
+      );
     }
   }
 
@@ -21,36 +21,36 @@ class Login extends React.Component {
         <div className="alert alert-danger" role="alert">
           {errors.message}
         </div>
-      )
+      );
     }
   }
 
   renderIcon(iconName) {
     if (iconName === 'At') {
       return <FontAwesomeIcon icon={faAt} />;
-    } else if (iconName === 'Lock') {
+    } if (iconName === 'Lock') {
       return <FontAwesomeIcon icon={faLock} />;
     }
   }
 
-  renderInput = ({ input, label, placeholder, iconName, meta }) => {
-    return (
-      <div className="form-group">
-        <div className="input-group">
-          <div className="input-group-prepend">
-            <div className="input-group-text">
-              {this.renderIcon(iconName)}
-            </div>
+  renderInput = ({
+    input, label, placeholder, iconName, meta,
+  }) => (
+    <div className="form-group">
+      <div className="input-group">
+        <div className="input-group-prepend">
+          <div className="input-group-text">
+            {this.renderIcon(iconName)}
           </div>
-          <input {...input} className="form-control" placeholder={placeholder} />
         </div>
-        {this.renderError(meta)}
+        <input {...input} className="form-control" placeholder={placeholder} />
       </div>
-    )
-  }
+      {this.renderError(meta)}
+    </div>
+  )
 
   onSubmit = (formValues) => {
-    this.props.signIn(formValues)
+    this.props.signIn(formValues);
   }
 
   render() {
@@ -74,23 +74,21 @@ const validate = (formValues) => {
   const errors = {};
 
   if (!formValues.email) {
-    errors.email = "You must enter your email.";
+    errors.email = 'You must enter your email.';
   }
 
   if (!formValues.password) {
-    errors.password = "You must enter your Password.";
+    errors.password = 'You must enter your Password.';
   }
 
   return errors;
-}
+};
 
-const mapStateToProps = (state) => {
-  return { signInErrors: state.auth.signInErrors }
-}
+const mapStateToProps = (state) => ({ signInErrors: state.auth.signInErrors });
 
 const LoginForm = connect(mapStateToProps, { signIn })(Login);
 
 export default reduxForm({
   form: 'loginForm',
-  validate
+  validate,
 })(LoginForm);
