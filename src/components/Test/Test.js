@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Header from '../Header/Header';
-import Sidebar from '../Sidebar/Sidebar';
 import TestCard from './TestList/TestList';
 import { fetchUser, fetchTests } from '../../actions';
 import './Test.css';
@@ -15,7 +14,6 @@ class Test extends React.Component {
   render() {
     return (
       <div>
-        <Sidebar />
         <Header />
         <TestCard tests={this.props.tests} />
       </div>
