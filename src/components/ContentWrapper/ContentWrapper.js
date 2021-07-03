@@ -1,5 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { faDownload, faCalendar } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import './ContentWrapper.css';
 
 class ContentWrapper extends React.Component {
   render() {
@@ -201,13 +204,13 @@ class ContentWrapper extends React.Component {
 
                         <div className="d-sm-flex align-items-center justify-content-between mb-4">
                             <h1 className="h3 mb-0 text-gray-800">Dashboard</h1>
-                            <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                    className="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                            <a href="#" className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                                <FontAwesomeIcon className="fa-sm text-white-50" icon={faDownload} />
+                                Generate Report</a>
                         </div>
 
                         <div className="row">
-
-                            <div className="col-xl-3 col-md-6 mb-4">
+                            <div class="col-xl-3 col-md-6 mb-4">
                                 <div className="card border-left-primary shadow h-100 py-2">
                                     <div className="card-body">
                                         <div className="row no-gutters align-items-center">
@@ -217,14 +220,13 @@ class ContentWrapper extends React.Component {
                                                 <div className="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
                                             </div>
                                             <div className="col-auto">
-                                                <i className="fas fa-calendar fa-2x text-gray-300"></i>
+                                                <FontAwesomeIcon className="fa-2x text-gray-300" icon={faCalendar} />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <div className="col-xl-3 col-md-6 mb-4">
+                            <div class="col-xl-3 col-md-6 mb-4">
                                 <div className="card border-left-success shadow h-100 py-2">
                                     <div className="card-body">
                                         <div className="row no-gutters align-items-center">
@@ -240,8 +242,7 @@ class ContentWrapper extends React.Component {
                                     </div>
                                 </div>
                             </div>
-
-                            <div className="col-xl-3 col-md-6 mb-4">
+                            <div class="col-xl-3 col-md-6 mb-4">
                                 <div className="card border-left-info shadow h-100 py-2">
                                     <div className="card-body">
                                         <div className="row no-gutters align-items-center">
@@ -268,8 +269,7 @@ class ContentWrapper extends React.Component {
                                     </div>
                                 </div>
                             </div>
-
-                            <div className="col-xl-3 col-md-6 mb-4">
+                            <div class="col-xl-3 col-md-6 mb-4">
                                 <div className="card border-left-warning shadow h-100 py-2">
                                     <div className="card-body">
                                         <div className="row no-gutters align-items-center">
@@ -286,7 +286,6 @@ class ContentWrapper extends React.Component {
                                 </div>
                             </div>
                         </div>
-
 
                         <div className="row">
 
@@ -394,7 +393,7 @@ class ContentWrapper extends React.Component {
                                         <h4 className="small font-weight-bold">Account Setup <span
                                                 className="float-right">Complete!</span></h4>
                                         <div className="progress">
-                                            <div className="progress-bar bg-success" role="progressbar" 
+                                            <div className="progress-bar bg-success" role="progressbar"
                                                 aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
@@ -477,7 +476,7 @@ class ContentWrapper extends React.Component {
                                     </div>
                                     <div className="card-body">
                                         <div className="text-center">
-                                            <img className="img-fluid px-3 px-sm-4 mt-3 mb-4" 
+                                            <img className="img-fluid px-3 px-sm-4 mt-3 mb-4"
                                                 src="img/undraw_posting_photo.svg" alt="..." />
                                         </div>
                                         <p>Add some quality, svg illustrations to your project courtesy of <a
